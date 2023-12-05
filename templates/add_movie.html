@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Movie</title>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff4b5c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e6001a;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #ff4b5c;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}">Login</a>
+         {% if current_user.is_authenticated %}
+            {% if current_user.admin %}
+                <a href="{{ url_for('admin') }}">Add Movie</a>
+            {% endif %}
+        <a href="{{ url_for('show_all_movies') }}">All Movies</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+    </nav>
+    <h1>Add Movie</h1>
+    <form method="POST" action="{{ url_for('add_movie') }}" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <div>
+            <label for="poster">Movie Poster:</label>
+            <input type="file" id="poster" name="poster">
+        </div>
+        <div>
+            <label for="title">Title:</label>
+            {{ form.title }}
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            {{ form.description }}
+        </div>
+        <div>
+            <label for="classification">Classification:</label>
+            {{ form.classification }}
+        </div>
+        <div>
+            <label for="season">Season:</label>
+            {{ form.season }}
+        </div>
+        <div>
+            <label for="color">Color:</label>
+            {{ form.color }}
+        </div>
+        <div>
+            <input type="submit" value="Add Movie">
+        </div>
+    </form>
+</body>
+</html>

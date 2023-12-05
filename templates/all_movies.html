@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Movies</title>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+<!--            background-color: #fff;-->
+            margin-top: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            background-color: black;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        img {
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        h3 {
+            margin-top: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #ff4b5c;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+       <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}">Login</a>
+         {% if current_user.is_authenticated %}
+            {% if current_user.admin %}
+                <a href="{{ url_for('admin') }}">Add Movie</a>
+            {% endif %}
+        <a href="{{ url_for('show_all_movies') }}">All Movies</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+    </nav>
+
+    <div class="container">
+        <h1>All Movies</h1>
+        <ul>
+            {% for movie in movies %}
+                <li>
+                    <a href="{{ url_for('show_movie', movie_id=movie.id) }}">
+                    <img src="{{ url_for('static', filename=movie.poster) }}" alt="Movie Poster">
+                        <h3>{{ movie.title }}</h3>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
